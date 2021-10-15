@@ -6,14 +6,13 @@
   width: 600px;
   margin: auto;
   border: 1px solid black;
+  border-radius: 25px;
   background-color: #bebebe;
 }
 
+/* Screen */
 .screen {
-  grid-row-start: 2;
-  grid-row-end: span 2;
-  grid-column-start: 2;
-  grid-column-end: span 6;
+  grid-area: 2 / 2 / span 2 / span 6;
   background-color: white;
 }
 
@@ -22,4 +21,44 @@
   justify-content: right;
   align-items: flex-end;
   font-size: 36px;
+}
+
+/* Big buttons */
+.clear {
+  grid-area: 5 / 2 / span 1 / span 2;
+  background-color: #faa;
+}
+
+.backspace {
+  grid-area: 5 / 6 / span 1 / span 2;
+  background-color: #aaaafe;
+}
+
+.big-button-style {
+  display: flex;
+  border: 1px solid black;
+  border-radius: 25px;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 20%;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Little Buttons */
+
+.button {
+  grid-area: 7 / 2 / 18 / 8;
+  /* This creates a subgrid! */
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.button-design {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: x-large;
+  border: 1px solid black;
 }
