@@ -14,19 +14,26 @@ function divide(a, b) {
   if (b == 0) {
     return "Can't Divide by Zero";
   }
+
   return Number(a) / Number(b);
 }
 
 function operate(operator, a, b) {
-  return operator === "+"
-    ? add(a, b)
-    : operator === "-"
-    ? subtract(a, b)
-    : operator === "*"
-    ? multiply(a, b)
-    : operator === "/"
-    ? divide(a, b)
-    : false;
+  if (operator === "+") {
+    return add(a, b);
+  }
+
+  if (operator === "-") {
+    return subtract(a, b);
+  }
+
+  if (operator === "x") {
+    return multiply(a, b);
+  }
+
+  if (operator === "/") {
+    return divide(a, b);
+  }
 }
 
 function firstOrSecondNum(e) {
@@ -50,24 +57,51 @@ let secondNum = "";
 let operatorOnCalc = "";
 
 // Add click listeners
-const numberButton = document.querySelectorAll(".number");
-const operatorButton = document.querySelectorAll(".operator");
+const numberButtons = document.querySelectorAll(".number");
+const operatorButtons = document.querySelectorAll(".operator");
 const equalButton = document.querySelector(".equal");
+const clearButton = document.querySelector(".clear");
+const backspaceButton = document.querySelector(".backspace");
 
-for (const button of numberButton) {
+for (const button of numberButtons) {
   button.addEventListener("click", firstOrSecondNum);
 }
 
-for (const button of operatorButton) {
+for (const button of operatorButtons) {
   button.addEventListener("click", (e) => {
-    operatorOnCalc = `${e.target.textContent}`;
+    if (firstNum) {
+      operatorOnCalc = `${e.target.textContent}`;
+    }
   });
 }
 
 equalButton.addEventListener("click", () => {
-  const answer = operate(operatorOnCalc, firstNum, secondNum);
-  document.querySelector(".screen").textContent = `${answer}`;
-  firstNum = answer;
+  if (!operatorOnCalc) {
+    return document.querySelector(".screen").textContent;
+  }
+
+  if (secondNum) {
+    const answer = operate(operatorOnCalc, firstNum, secondNum);
+    document.querySelector(".screen").textContent = `${answer}`;
+    firstNum = answer;
+    secondNum = "";
+    operatorOnCalc = "";
+  }
+});
+
+clearButton.addEventListener("click", () => {
+  document.querySelector(".screen").textContent = "";
+  firstNum = "";
   secondNum = "";
-  operatorOnCalc = "";
+});
+
+backspaceButton.addEventListener("click", () => {
+  let screen = document.querySelector(".screen").textContent;
+  let numberBackspace = screen.split("").slice(0, -1);
+
+  document.querySelector(".screen").textContent = `${numberBackspace.join("")}`;
+
+  operatorOnCalc
+    ? (secondNum = document.querySelector(".screen").textContent)
+    : (firstNum = document.querySelector(".screen").textContent);
 });
